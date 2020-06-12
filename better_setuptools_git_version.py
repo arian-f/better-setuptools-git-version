@@ -6,7 +6,8 @@ import collections
 def get_tag():
     """Return the last tag for the git repository reachable from HEAD."""
     # another possible option is: 'git tag --merged | sort -V | tail -n1'
-    return subprocess.getoutput("git tag --sort=version:refname --merged | tail -n1")
+    git_tag_lines = subprocess.getoutput("git tag --sort=version:refname --merged").splitlines()
+    return git_tag_lines[-1] if len(git_tag_lines) > 0 else ''
 
 
 def get_tag_commit_sha(tag):
